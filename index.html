@@ -1,11 +1,59 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <script src="script.js"></script>
+
+    <script src="https://build.weavr.io/app/secure/static/client.1.js"></script>
+ 
+ <script type="text/javascript">
+      // Replace {{ui_key}} with your UI key from the Multi Portal > API Credentials screen
+      // Remember to change the UI key when moving your application to the Live environment
+      window.OpcUxSecureClient.init('{{ui_key}}');
+    </script>
+
+<script type="text/javascript">
+  // Initialise the UI library using your ui_key. Replace {{ui_key}} with your own UI key.
+  window.OpcUxSecureClient.init('{{ui_key}}');
+
+  // Create an instance of a secure form
+  var form = window.OpcUxSecureClient.form();
+  
+  // Create an instance of a secure Password component that will collect the password
+  var input = form.input(
+    'p', 
+    'password', 
+    {
+      placeholder: 'Password', 
+      maxlength: 20
+    }
+  );
+
+  // Embed the secure Password component in the HTML element where you want
+  // the Password component to the shown on screen
+  input.mount(document.getElementById('password'));
+
+  // Define a function that will be executed when the form is submitted by the user
+  function onSubmit() {
+      // Get the tokenised version of the password inputted by your customer
+      form.tokenize(function(tokens) {
+          console.log(tokens);
+      });
+  }
+</script>
+
     <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
   </head>
   <body>
     <h1>Hello there!</h1>
     <a href="/me.html">My other page</a>
+    <!-- Define a form in which you will ask your customer to input their password -->
+
+
+<form onSubmit="onSubmit(); return false;">
+Username: <input type="input" name="u" /><br/>
+Password: <div id="password"></div><br/>
+<input type="submit" value="Login" />
+</form>
+
+
   </body>
 </html>
